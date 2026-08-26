@@ -1,30 +1,25 @@
+/* Palette taken from the app's asset catalog:
+   primary #5B1919 (header bar) Â· secondary #E4DCC9 (screen background)
+   text_color #2D363D Â· hint_color #63737E Â· separator #D6DADD
+   The app is light-only, so these pages are too. */
+
 :root {
-  --bg: #f6f7f5;
+  --bg: #e4dcc9;
   --surface: #ffffff;
-  --text: #1c2321;
-  --muted: #5f6b66;
-  --accent: #0f766e;
-  --accent-soft: #e6f2f0;
-  --border: #e2e6e3;
+  --text: #2d363d;
+  --muted: #63737e;
+  --accent: #5b1919;
+  --accent-ink: #ffffff;
+  --accent-tint: rgba(91, 25, 25, .07);
+  --border: rgba(91, 25, 25, .14);
+  --border-soft: #d6dadd;
   --radius: 14px;
   --maxw: 780px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #101412;
-    --surface: #171d1a;
-    --text: #e8ede9;
-    --muted: #9aa8a2;
-    --accent: #4db6ac;
-    --accent-soft: #16302c;
-    --border: #26302c;
-  }
-}
-
 * { box-sizing: border-box; }
 
-html { -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; background: var(--bg); }
 
 body {
   margin: 0;
@@ -42,18 +37,22 @@ body[dir="ltr"] {
 
 .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 20px 64px; }
 
+/* ---- header band: mirrors the app's maroon nav bar ---- */
+
 header.top {
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  padding: 28px 0 22px;
-  margin-bottom: 32px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  padding: 30px 0 26px;
+  margin-bottom: 34px;
 }
+
+header.top .wrap { padding-bottom: 0; }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 10px;
-  color: var(--accent);
+  gap: 9px;
+  color: rgba(255, 255, 255, .82);
   font-weight: 700;
   font-size: 15px;
   letter-spacing: .02em;
@@ -61,35 +60,43 @@ header.top {
 }
 
 .brand .dot {
-  width: 9px; height: 9px; border-radius: 50%;
-  background: var(--accent); flex: none;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--bg); flex: none;
 }
 
-h1 { font-size: 27px; line-height: 1.4; margin: 0 0 8px; font-weight: 700; }
+header.top h1 {
+  font-size: 27px;
+  line-height: 1.4;
+  margin: 0 0 8px;
+  font-weight: 700;
+  color: var(--accent-ink);
+}
 
-.meta { color: var(--muted); font-size: 13.5px; margin: 0; }
+.meta { color: rgba(255, 255, 255, .72); font-size: 13.5px; margin: 0; }
 
-.langbar { display: flex; gap: 8px; margin-top: 18px; }
+.langbar { display: flex; gap: 8px; margin-top: 20px; }
 
 .langbar a {
   display: inline-block;
-  padding: 6px 16px;
+  padding: 6px 17px;
   border-radius: 999px;
-  border: 1px solid var(--border);
-  color: var(--muted);
+  border: 1px solid rgba(255, 255, 255, .38);
+  color: rgba(255, 255, 255, .88);
   text-decoration: none;
   font-size: 14px;
   transition: .15s;
 }
 
-.langbar a:hover { border-color: var(--accent); color: var(--accent); }
+.langbar a:hover { border-color: #fff; color: #fff; }
 
 .langbar a.active {
-  background: var(--accent-soft);
-  border-color: var(--accent);
+  background: #fff;
+  border-color: #fff;
   color: var(--accent);
   font-weight: 700;
 }
+
+/* ---- document body ---- */
 
 section[data-lang] { display: none; }
 section[data-lang].visible { display: block; }
@@ -97,14 +104,15 @@ section[data-lang].visible { display: block; }
 h2 {
   font-size: 19px;
   margin: 38px 0 12px;
-  padding-top: 10px;
+  padding-top: 14px;
   border-top: 1px solid var(--border);
   font-weight: 700;
+  color: var(--accent);
 }
 
 h2:first-of-type { border-top: none; margin-top: 8px; padding-top: 0; }
 
-h3 { font-size: 16.5px; margin: 24px 0 8px; font-weight: 700; color: var(--accent); }
+h3 { font-size: 16.5px; margin: 24px 0 8px; font-weight: 700; color: var(--text); }
 
 p, li { color: var(--text); }
 
@@ -112,14 +120,17 @@ ul { padding-inline-start: 22px; margin: 10px 0; }
 
 li { margin-bottom: 7px; }
 
-a { color: var(--accent); }
+a { color: var(--accent); text-underline-offset: 3px; }
+
+strong { color: #1f2a30; }
 
 .card {
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-soft);
   border-radius: var(--radius);
   padding: 18px 20px;
   margin: 18px 0;
+  box-shadow: 0 1px 2px rgba(45, 54, 61, .05);
 }
 
 .card p:first-child { margin-top: 0; }
@@ -130,18 +141,21 @@ table {
   border-collapse: collapse;
   margin: 16px 0;
   font-size: 14.5px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  overflow: hidden;
   display: block;
   overflow-x: auto;
 }
 
 th, td {
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-soft);
   padding: 9px 12px;
   text-align: start;
   vertical-align: top;
 }
 
-th { background: var(--accent-soft); color: var(--accent); font-weight: 700; }
+th { background: var(--accent-tint); color: var(--accent); font-weight: 700; }
 
 footer.bottom {
   margin-top: 46px;
@@ -151,9 +165,10 @@ footer.bottom {
   font-size: 13.5px;
 }
 
-footer.bottom a { color: var(--muted); }
+footer.bottom a { color: var(--accent); }
 
 @media (max-width: 520px) {
-  h1 { font-size: 22px; }
+  header.top h1 { font-size: 22px; }
   body { font-size: 15.5px; }
+  header.top { padding: 24px 0 20px; margin-bottom: 26px; }
 }
